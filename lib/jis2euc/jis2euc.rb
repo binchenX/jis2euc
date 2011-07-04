@@ -2,7 +2,9 @@
 # encoding: utf-8
 
 require 'iconv'
-require 'jis8ctl.rb'
+#require 'jis8ctl.rb'
+
+require File.join(File.dirname(__FILE__),'jis8ctl')
 =begin
 Dir.foreach("sample")  do  |f|
 	puts "->#{f}";
