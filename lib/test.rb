@@ -10,19 +10,34 @@ end
 
 class TC_JIS2EUC < Test::Unit::TestCase
 
+def setup
+  
+@raw1 = "32 2d 46 6c cb fb 1b 7c b5 d0 cb fc 1b 7d c8 a4 a6 45 41 45 7d ce 3e 2e 3d 2e c7 e 33 37 f 2d 52 e2 ce 35 77 4e 25 f2 41 66 a4 c7 3f 4a e0 32 61 39 73 ca 1b 7c ec f9 b9 1b 7d ac a2 eb fa b3 ce 1b 7c ec f9 b9 1b 7d cb 3b 32 32 43 b9 eb e 35 30 f 42 65 ce 43 4b bf c1 ac 4d 27 3e 70 f2 49 70 34 6f cb 42 4e 4e 4f ce 4a 49 f2 3e 68 ea 31 5b a8 eb 3b 51 f2 44 49 c3 bf fa "
+@raw2 = "1b 24 3b 7a 56 1b 24 39 34 6f 21 21 4c 34 39 29 4b 3c fb 35 35 4e 76 ac 3f 25 ea ca b9 37 4a 3f 27 fc "
+@raw3 = "1b 24 2a 3b fa d7 1b 7c ab f3 cb f3 b0 1b 2a 30 1b 7d ce e 44 41 49 f 30 42 35 48 46 7c 21 2a "
+@raw4 = "48 56 41 48 46 62 4d 46 e 32 89 2d 8a 1b 24 3b "
+
+end
 def test_arib_jis_to_euc_2
-raw = "32 2d 46 6c cb fb 1b 7c b5 d0 cb fc 1b 7d c8 a4 a6 45 41 45 7d ce 3e 2e 3d 2e c7 e 33 37 f 2d 52 e2 ce 35 77 4e 25 f2 41 66 a4 c7 3f 4a e0 32 61 39 73 ca 1b 7c ec f9 b9 1b 7d ac a2 eb fa b3 ce 1b 7c ec f9 b9 1b 7d cb 3b 32 32 43 b9 eb e 35 30 f 42 65 ce 43 4b bf c1 ac 4d 27 3e 70 f2 49 70 34 6f cb 42 4e 4e 4f ce 4a 49 f2 3e 68 ea 31 5b a8 eb 3b 51 f2 44 49 c3 bf fa "
-raw = "1b 24 3b 7a 56 1b 24 39 34 6f 21 21 4c 34 39 29 4b 3c fb 35 35 4e 76 ac 3f 25 ea ca b9 37 4a 3f 27 fc "
-raw = "1b 24 2a 3b fa d7 1b 7c ab f3 cb f3 b0 1b 2a 30 1b 7d ce e 44 41 49 f 30 42 35 48 46 7c 21 2a "
-raw = "48 56 41 48 46 62 4d 46 e 32 89 2d 8a 1b 24 3b "
-s = raw.split.map  {|t| ("0x"+t).to_i(16)}.inject("") {|s,c| s << c.chr}
- 
+
+puts_jis(@raw1)
+puts_jis(@raw2)
+puts_jis(@raw3)
+puts_jis(@raw4)
+
+end
+
+
+def puts_jis raw
+  
+s = raw.split.map  {|t| ("0x"+t).to_i(16)}.inject("") {|p,c| p << c.chr} 
 euc_s = arib_jis_to_euc(s)
 puts euc_to_utf8(euc_s)
 end
 
 
 end
+
 #test_iconv_euc_to_utf8
 #test_display_eisu
 #test_arib_jis_to_euc_2
