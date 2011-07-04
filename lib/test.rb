@@ -32,17 +32,16 @@ end
 
 def puts_jis raw
   
-s = raw.split.map  {|t| ("0x"+t).to_i(16)}.inject("") {|p,c| p << c.chr} 
-euc_s = arib_jis_to_euc(s)
-puts eucjp_to_utf8(euc_s)
+   s = raw.split.map  {|t| ("0x"+t).to_i(16)}.inject("") {|p,c| p << c.chr} 
+   euc_s = Jis2euc.jis2euc(s)
+   puts Jis2euc.euc2utf8(euc_s)
 end
 
 def test_euc_to_utf8
-  puts "=================="
   #Refer to : http://www.rikai.com/library/kanjitables/kanji_codes.euc.shtml
   #s = [0xa3,0xb0,0xa5,0xc0,0x8f,0xe6,0xc0,0x8f,0xe6,0xd0].inject("")  {|s ,b| s << b.chr}
   s = [0xa1,0xa1,0xdf,0xb7,0xba,0xea].inject("")  {|p ,b| p << b.chr} 
-  puts eucjp_to_utf8(s)
+  puts Jis2euc.euc2utf8(s)
 end
 
 

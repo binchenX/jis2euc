@@ -1,5 +1,5 @@
 
-require File.join(File.dirname(__FILE__),'jis2euc/jis2euc')
+require File.join(File.dirname(__FILE__),'jis2euc/libjis2euc')
 
 
 module Jis2euc
@@ -8,7 +8,7 @@ module Jis2euc
 	 arib_jis_to_euc s
 end
 
-  def self.euc2utf8
+  def self.euc2utf8 s
     eucjp_to_utf8 s
   end
 
