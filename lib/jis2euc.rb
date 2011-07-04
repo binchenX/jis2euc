@@ -9,7 +9,7 @@ module Jis2euc
 end
 
   def self.euc2utf8
-    euc_to_utf8 s
+    eucjp_to_utf8 s
   end
 
 end

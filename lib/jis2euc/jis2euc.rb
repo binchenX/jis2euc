@@ -5,6 +5,7 @@ require 'iconv'
 #require 'jis8ctl.rb'
 
 require File.join(File.dirname(__FILE__),'jis8ctl')
+
 =begin
 Dir.foreach("sample")  do  |f|
 	puts "->#{f}";
@@ -25,7 +26,7 @@ if RUBY_VERSION < "1.9"
 $KCODE = "UTF8"
 end
 
-
+#An internal test case
 def test_1
 ch = "中文"
 fr = "Résumés"
@@ -120,16 +121,9 @@ $debug = false
 def verbose s
 	puts s if $debug 
 end
+
 $eucjp_to_utf8 = Iconv.new("UTF8//TRANSLIT//IGNORE","EUCJP")
 
-def test_iconv_euc_to_utf8
-	puts "=================="
-	#Refer to : http://www.rikai.com/library/kanjitables/kanji_codes.euc.shtml
-	#s = [0xa3,0xb0,0xa5,0xc0,0x8f,0xe6,0xc0,0x8f,0xe6,0xd0].inject("")  {|s ,b| s << b.chr}
-	s = [0xa1,0xa1,0xdf,0xb7,0xba,0xea].inject("")  {|s ,b| s << b.chr}
-	#display ０ダ闟阺  
-	puts $eucjp_to_utf8.iconv(s)
-end
 
 def to_euc from ,a ,b = 0x00
 	special = [0x2d,0x7a,0x7b,0x7c,0x7e,0x7f]
@@ -145,6 +139,11 @@ v =	case from
 	s = ""
 	s << ((v & 0xFF00) >> 8 ).chr << (v & 0x00FF).chr
 end
+
+
+
+#To display the sisu 
+
 def test_display_eisu
 	s_euc = ""
 	0x23.upto(0x7e) do  |eisu|
@@ -158,7 +157,7 @@ def test_display_eisu
 	end
 	#Kanji1
 	s_euc << to_euc("kanji1",0x5f,0x37)	
-	puts $eucjp_to_utf8.iconv(s_euc)
+	puts eucjp_to_utf8(s_euc)
 end
 
 $jis8 = Jis8charset.new
@@ -250,7 +249,7 @@ def arib_jis_to_euc s
 							out << to_euc(charset, c1, c2 )
 						end
 						#used to locate error when iconv
-						verbose euc_to_utf8(out)	
+						verbose eucjp_to_utf8(out)	
 					end
 				end
 				$jis8.restore if single_shift
@@ -263,29 +262,10 @@ def arib_jis_to_euc s
 	out	
 end
 
-def euc_to_utf8 euc
-
+def eucjp_to_utf8 euc
  $eucjp_to_utf8.iconv(euc)
 end
 
-def test_arib_jis_to_euc
-s = [0xe,0x51,0x56,0x43,0xf,0x21,0x21,0x5f,0x37,0x3a,0x6a,0x89,0x20,0x8a,0x4e,0x34,0x3f,0x4d,0xce,0x1b,0x7c,0xc9].inject("")  {|s,c| s << c.chr}
 
-euc_s = arib_jis_to_euc(s)
-puts euc_to_utf8(euc_s)
-
-end
- 
-def test_arib_jis_to_euc_2
-raw = "32 2d 46 6c cb fb 1b 7c b5 d0 cb fc 1b 7d c8 a4 a6 45 41 45 7d ce 3e 2e 3d 2e c7 e 33 37 f 2d 52 e2 ce 35 77 4e 25 f2 41 66 a4 c7 3f 4a e0 32 61 39 73 ca 1b 7c ec f9 b9 1b 7d ac a2 eb fa b3 ce 1b 7c ec f9 b9 1b 7d cb 3b 32 32 43 b9 eb e 35 30 f 42 65 ce 43 4b bf c1 ac 4d 27 3e 70 f2 49 70 34 6f cb 42 4e 4e 4f ce 4a 49 f2 3e 68 ea 31 5b a8 eb 3b 51 f2 44 49 c3 bf fa "
-raw = "1b 24 3b 7a 56 1b 24 39 34 6f 21 21 4c 34 39 29 4b 3c fb 35 35 4e 76 ac 3f 25 ea ca b9 37 4a 3f 27 fc "
-raw = "1b 24 2a 3b fa d7 1b 7c ab f3 cb f3 b0 1b 2a 30 1b 7d ce e 44 41 49 f 30 42 35 48 46 7c 21 2a "
-raw = "48 56 41 48 46 62 4d 46 e 32 89 2d 8a 1b 24 3b "
-s = raw.split.map  {|t| ("0x"+t).to_i(16)}.inject("") {|s,c| s << c.chr}
- 
-euc_s = arib_jis_to_euc(s)
-puts euc_to_utf8(euc_s)
-end
-#test_iconv_euc_to_utf8
 #test_display_eisu
-test_arib_jis_to_euc_2
+
