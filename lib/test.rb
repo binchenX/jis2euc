@@ -48,6 +48,17 @@ def test_euc_to_utf8
 end
 
 
+def test_verbose_out_put
+  
+   raw = @raw4
+   s = raw.split.map  {|t| ("0x"+t).to_i(16)}.inject("") {|p,c| p << c.chr} 
+   euc_s = Jis2euc.jis2euc(s,true)
+   puts  Jis2euc.euc2utf8(euc_s)
+  
+  
+end
+
+
 end
 
 #test_iconv_euc_to_utf8

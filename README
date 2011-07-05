@@ -1,0 +1,37 @@
+ARIB is using a bunch of encodings when transmitting the text information, such as EPG, cc and BML text encoding. Control code is used to switch the encoding. This gem is used to convent the text information to standard EUC-JP encoding.  
+
+
+Examples : 
+
+require 'jis2euc'
+
+raw = "48 56 41 48 46 62 4d 46 e 32 89 2d 8a 1b 24 3b "
+s = raw.split.map  {|t| ("0x"+t).to_i(16)}.inject("") {|p,c| p << c.chr} 
+
+euc_s = Jis2euc.jis2euc(s,true)  #set the 2nd parameter to ture will enable debug information 
+
+
+#output debug information 
+convert following string to euc :
+48 56 41 48 46 62 4d 46 e 32 89 2d 8a 1b 24 3b 
+c1 : 48     ->Char-> kanji1     , 2
+番
+c1 : 41     ->Char-> kanji1     , 2
+番組
+c1 : 46     ->Char-> kanji1     , 2
+番組内
+c1 : 4d     ->Char-> kanji1     , 2
+番組内容
+c1 : e     ->Is CTL
+LS1 : GL=>G1, locking shift
+c1 : 32     ->Char-> eisu       , 1
+c1 : 89     ->Is CTL
+ingor
+c1 : 2d     ->Char-> eisu       , 1
+c1 : 8a     ->Is CTL
+ignor
+c1 : 1b     ->Is CTL
+ESC ..
+-> CTL 0x24  Type 3b
+番組内容２―
+

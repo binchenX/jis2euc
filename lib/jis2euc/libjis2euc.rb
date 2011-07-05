@@ -117,7 +117,7 @@ $katakana_to_euc = [
 	]
 
 
-$debug = false 
+$debug = true
 def verbose s
 	puts s if $debug 
 end
@@ -161,8 +161,9 @@ def test_display_eisu
 end
 
 $jis8 = Jis8charset.new
-def arib_jis_to_euc s
+def arib_jis_to_euc s , verbose = false
 
+  $debug = verbose
 	#convert string to array , so that we can index it freely
 	src = []
     out = ""

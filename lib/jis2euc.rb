@@ -3,9 +3,11 @@ require File.join(File.dirname(__FILE__),'jis2euc/libjis2euc')
 
 
 module Jis2euc
-  # Your code goes here...
-  def self.jis2euc s
-	 arib_jis_to_euc s
+   #
+   # set verbose to true will print out the detail parse and conversion information
+   # 
+  def self.jis2euc s ,verbose = false
+	 arib_jis_to_euc s , verbose
 end
 
   def self.euc2utf8 s
