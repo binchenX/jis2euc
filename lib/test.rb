@@ -1,4 +1,7 @@
+#include this to test local latest change before publishing the gem
 require './lib/jis2euc'
+
+#include this to use the installed gem.
 #require 'jis2euc'
 require 'test/unit'
 
@@ -34,7 +37,7 @@ def puts_jis raw
   
    s = raw.split.map  {|t| ("0x"+t).to_i(16)}.inject("") {|p,c| p << c.chr} 
    euc_s = Jis2euc.jis2euc(s)
-   puts Jis2euc.euc2utf8(euc_s)
+   puts  Jis2euc.euc2utf8(euc_s)
 end
 
 def test_euc_to_utf8
