@@ -48,19 +48,35 @@ def test_euc_to_utf8
 end
 
 
-def test_verbose_out_put
+def test_verbose_output
   
-   raw = @raw4
+   raw = @raw1
    s = raw.split.map  {|t| ("0x"+t).to_i(16)}.inject("") {|p,c| p << c.chr} 
-   euc_s = Jis2euc.jis2euc(s,true)
+   euc_s = Jis2euc.jis2euc(s,false)
+   print_out_euc euc_s
+end
+
+
+def test_print_convert_eucjp
+
+   raw = @raw3
+   s = raw.split.map  {|t| ("0x"+t).to_i(16)}.inject("") {|p,c| p << c.chr} 
+   euc_s = Jis2euc.jis2euc(s,false)
+
+   print_out_euc euc_s
+end
+
+
+def print_out_euc euc_s
+   puts "---------------------------------------------"
+   puts "view the characters in UTF-8 encoding console"
    puts  Jis2euc.euc2utf8(euc_s)
-  
-  
+   puts "The EUC_JP encoding bytes :"
+   euc_s.each_byte {|c| print c.to_s(16) ; print ","}
+   puts "\n---------------------------------------------"
 end
 
-
 end
-
 #test_iconv_euc_to_utf8
 #test_display_eisu
 #test_arib_jis_to_euc_2

@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 require 'iconv'
+require 'singleton'
 #require 'jis8ctl.rb'
 
 require File.join(File.dirname(__FILE__),'jis8ctl')
@@ -160,10 +161,12 @@ def test_display_eisu
 	puts eucjp_to_utf8(s_euc)
 end
 
-$jis8 = Jis8charset.new
-def arib_jis_to_euc s , verbose = false
+$jis8 = Jis8charset.instance
 
-  $debug = verbose
+
+def arib_jis_to_euc s , enable_debug = false
+
+  $debug = enable_debug
 	#convert string to array , so that we can index it freely
 	src = []
     out = ""

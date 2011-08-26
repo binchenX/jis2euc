@@ -100,7 +100,9 @@ $encoding_mapping = {
 
 class Jis8charset
 
-	#TODO : make it singleton
+	
+  include Singleton
+  
 def initialize
 
 	@areas= {"GL"=> "G0" , "GR" => "G2"}
@@ -108,6 +110,7 @@ def initialize
 	@last_gl = "G0"
 	@single_shift = false
 end
+
 def reset 
 	@areas= {"GL"=> "G0" , "GR" => "G2"}
 	@sets = {"G0"=> "kanji1" , "G1" => "eisu", "G2"=>"hira","G3"=>"kata"}
